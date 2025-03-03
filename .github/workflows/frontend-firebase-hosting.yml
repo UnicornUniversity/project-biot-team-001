@@ -1,10 +1,15 @@
 name: Deploy to Firebase Hosting
+
 on:
   push:
     branches:
       - master
     paths:
       - "frontend/**"
+
+defaults:
+  run:
+    working-directory: frontend
 
 jobs:
   deploy-frontend:
