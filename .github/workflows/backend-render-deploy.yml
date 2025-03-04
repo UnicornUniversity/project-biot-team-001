@@ -1,0 +1,32 @@
+name: Deploy API to Render application
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "backend/**"
+
+jobs:
+  deploy_api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Deploy API
+        if: env.backend_changed == 'true'
+        run: |
+          RESPONSE=$(curl --silent --write-out "%{http_code}" --output /dev/null --request POST \
+            --url https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys \
+            --header 'accept: application/json' \
+            --header 'content-type: application/json' \
+            --header "authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            --data '{"clearCache": "clear"}')
+
+          if [ "$RESPONSE" -eq 201 ]; then
+            echo "Deployment request successful!"
+          else
+            echo "Deployment request failed with status code $RESPONSE"
+            exit 1
+          fi

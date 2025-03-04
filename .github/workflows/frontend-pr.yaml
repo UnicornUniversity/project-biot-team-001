@@ -1,4 +1,4 @@
-name: Frontend Workflow
+name: Frontend PR Workflow
 
 on:
   pull_request:
