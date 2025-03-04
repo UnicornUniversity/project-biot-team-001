@@ -15,7 +15,6 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Deploy API
-        if: env.backend_changed == 'true'
         run: |
           RESPONSE=$(curl --silent --write-out "%{http_code}" --output /dev/null --request POST \
             --url https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys \
