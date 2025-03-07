@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.get("/", (req, res) => {
-  res.status(200).send("API for BIOT Team 001 is running! :)");
+  res.status(200).send("API for BIOT Team 001 is running :)");
 });
 
 app.listen(port, () => {
