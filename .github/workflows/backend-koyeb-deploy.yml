@@ -15,7 +15,13 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Deploy to Koyeb
+      - name: Install Koyeb CLI
         run: |
-          curl -X POST "https://app.koyeb.com/v1/apps/ba796b33-9dc1-446c-a6e0-7af7565c6a79/deploy" \
-          -H "Authorization: Bearer ${{ secrets.KOYEB_API_TOKEN }}"
+          curl -sSL https://get.koyeb.app | sh
+          echo "$HOME/.koyeb/bin" >> $GITHUB_PATH
+
+      - name: Authenticate Koyeb CLI
+        run: koyeb login --token ${{ secrets.KOYEB_API_TOKEN }}
+
+      - name: Deploy latest version
+        run: koyeb service redeploy project-biot-team-001
