@@ -3,7 +3,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
 const app = express();
-const port = 4242;
+const port = process.env.PORT || 8000;
 
 const corsOptions = {
   origin: "http://localhost:5173", // Allow only the frontend origin (TODO)
